@@ -19,6 +19,10 @@ Overlay OBS yang menampilkan kartu "Attendance" setiap kali penonton melakukan c
    - Sub-action **Execute C# Code** — menyusun data (nama, login, jumlah absen, foto profil) menjadi JSON dan mem-broadcast-nya lewat `CPH.WebsocketBroadcastJson`.
 3. `index.html` yang di-load sebagai Browser Source di OBS menerima broadcast tersebut lewat `@streamerbot/client`, memasukkannya ke antrian, lalu menampilkan kartu dengan animasi.
 
+## Prasyarat
+
+- Harus punya [Streamer.bot](https://streamer.bot)
+
 ## Setup di Streamer.bot
 
 > ⚠️ Pastikan untuk backup data streamer.bot karena data jumlah absen yang diambil murni dari streamer.bot
@@ -109,6 +113,8 @@ const STREAMERBOT_HOST = "127.0.0.1";
 const STREAMERBOT_PORT = 8081; // samakan dengan port WebSocket Server di Streamer.bot
 const DISPLAY_DURATION_MS = 4000; // lama kartu tampil di layar
 const FALLBACK_AVATAR = "..."; // link gambar (300x300 pixel) dipakai kalau foto profil gagal dimuat
+const NOTIF_SOUND_SRC = "..."; // ganti suara notifikasi jadi yang lain (link/local file) yang diinginkan
+const NOTIF_VOLUME = 0.7; // 0.0 (mute) - 1.0 (paling keras)
 ```
 
 ## Troubleshooting
@@ -121,6 +127,14 @@ const FALLBACK_AVATAR = "..."; // link gambar (300x300 pixel) dipakai kalau foto
 | Hitungan absen reset sendiri                 | Opsi **Persist per User Counter** belum dicentang di reward                                                              |
 | Hitungan absen tercampur antar reward        | `userCounter` bersifat per-reward; kalau check-in dipicu dari beberapa reward berbeda, hitungannya tidak akan tergabung  |
 | Overlay tidak terhubung ke Streamer.bot      | Cek `STREAMERBOT_HOST`/`STREAMERBOT_PORT` cocok dengan setting WebSocket Server, dan WebSocket Server dalam status aktif |
+| Suara notifikasi tidak terdengar di stream   | **Control audio via OBS** belum dicentang di Properties Browser Source, atau `NOTIF_SOUND_SRC` salah nama file/path      |
+
+## Dukung Project Ini
+
+Project ini dibuat secara gratis. Kalau overlay-nya membantu stream kamu dan ingin traktir kopi:
+
+- ☕ **Ko-fi** — [ko-fi.com/rekize](https://ko-fi.com/rekize)
+- 🎁 **Tako** — [tako.id/rekize](https://tako.id/rekize)
 
 ## Lisensi
 
