@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <link rel="stylesheet" href="style.css">
+  <title>Absen Overlay</title>
+
+  <!-- untuk animasi muncul dan hilang -->
+  <style>
+    body {
+      margin: 0;
+      background: transparent;
+      overflow: hidden;
+      font-family: monospace;
+    }
+
+    .card {
+      transform: translateY(20px);
+      opacity: 0.1;
+    }
+
+    .animate-in {
+      animation: popIn 0.5s ease forwards;
+    }
+
+    .animate-out {
+      animation: popOut 0.5s ease forwards;
+    }
+
+    @keyframes popIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes popOut {
+      from { opacity: 1; transform: translateY(0); }
+      to { opacity: 0; transform: translateY(20px); }
+    }
+  </style>
+</head>
+<body>
+  <main class="main">
+    <div id="overlayCard" class="card card-container">
+      <div class="image-container">
+        <img id="avatar" class="image" src="https://placehold.co/300x300?text=No+Image" alt="" />
+      </div>
+
+      <div class="text-container">
+        <p class="attendance">Attendance</p>
+        <h1 id="userName" class="username-text">Loading...</h1>
+        <h2 id="summary" class="summary-text">Loading..</h2>
+      </div>
+    </div>
+  </main>
+
+  <!-- Via CDN @streamerbot/client -->
+  <!-- Jika ingin offline, download file streamerbot-client.js
+       dan simpan lokal di folder yang sama, lalu ganti src di bawah ini jadi path lokal -->
+  <script src="https://unpkg.com/@streamerbot/client/dist/streamerbot-client.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
