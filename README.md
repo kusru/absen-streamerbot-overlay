@@ -85,7 +85,7 @@ public class CPHInline
 }
 ```
 
-Atau bisa copas dari file yang sudah ada di [sini](/main.cs)
+Atau bisa copas dari file yang sudah ada di [file ini](/main.cs)
 
 **Catatan penamaan variabel Streamer.bot** (sering ketuker):
 
