@@ -113,7 +113,7 @@ const FALLBACK_AVATAR = "..."; // link gambar (300x300 pixel) dipakai kalau foto
 
 ## Troubleshooting
 
-| Gejala                                       | Kemungkinan Penyebab                                                                                                     |
+| Kendala                                      | Kemungkinan Penyebab                                                                                                     |
 | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
 | Kartu langsung terlihat sebelum ada check-in | `opacity` dasar di CSS tidak 0 — pastikan `.card` mulai dari `opacity: 0`                                                |
 | Foto profil selalu fallback                  | Sub-action "Get User Info for Target" belum ada / salah urutan / Source Type salah                                       |
