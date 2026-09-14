@@ -125,7 +125,6 @@ Edit bagian `KONFIGURASI` di awal file sesuai kebutuhan:
 const STREAMERBOT_HOST = "127.0.0.1";
 const STREAMERBOT_PORT = 8081; // samakan dengan port WebSocket Server di Streamer.bot
 const DISPLAY_DURATION_MS = 4000; // lama kartu tampil di layar
-const POPOUT_DURATION_MS = 500; // harus sama dengan durasi animasi popOut di CSS
 const FALLBACK_AVATAR = "..."; // link gambar (300x300 pixel) dipakai kalau foto profil gagal dimuat
 const NOTIF_SOUND_SRC = "notif.mp3"; // file audio, taruh di folder yang sama dengan index.html
 const NOTIF_VOLUME = 0.7; // 0.0 (mute) - 1.0 (paling keras)

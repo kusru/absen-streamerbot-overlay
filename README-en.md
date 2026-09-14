@@ -125,7 +125,6 @@ Edit the `KONFIGURASI` section near the top of the file as needed:
 const STREAMERBOT_HOST = "127.0.0.1";
 const STREAMERBOT_PORT = 8081; // must match the WebSocket Server port in Streamer.bot
 const DISPLAY_DURATION_MS = 4000; // how long the card stays on screen
-const POPOUT_DURATION_MS = 500; // must match the popOut animation duration in the CSS
 const FALLBACK_AVATAR = "..."; // image link (300x300 pixels) used when the profile picture fails to load
 const NOTIF_SOUND_SRC = "notif.mp3"; // audio file, place it in the same folder as index.html
 const NOTIF_VOLUME = 0.7; // 0.0 (mute) - 1.0 (loudest)

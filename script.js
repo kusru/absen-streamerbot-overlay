@@ -3,7 +3,6 @@ const STREAMERBOT_HOST = '127.0.0.1';
 const STREAMERBOT_PORT = 8081; // pastikan sama persis dengan port di WebSocket Server Streamer.bot
 
 const DISPLAY_DURATION_MS = 4000; // lama kartu tampil
-const POPOUT_DURATION_MS = 500;   // harus sama dengan durasi animasi popOut di CSS
 
 const FALLBACK_AVATAR = "https://static-cdn.jtvnw.net/jtv_user_pictures/static/twal_cards_glitch.png";
 
@@ -111,5 +110,6 @@ async function showRedemption(name, jumlahAbsen, profileURL) {
 
   
   // 6. Tunggu animasi keluar selesai sebelum lanjut ke antrian berikutnya
+  // (milisecondnya harus sama dengan durasi animasi popOut di CSS)
   await wait(500);
 }
