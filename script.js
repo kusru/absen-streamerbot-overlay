@@ -1,16 +1,17 @@
- // ====== KONFIGURASI ======
+    // ====== KONFIGURASI ======
+    // pastikan sama persis dengan port di WebSocket Server Streamer.bot
     const STREAMERBOT_HOST = '127.0.0.1';
-    const STREAMERBOT_PORT = 8081; // pastikan sama persis dengan port di WebSocket Server Streamer.bot
+    const STREAMERBOT_PORT = 8081; 
 
-    const DISPLAY_DURATION_MS = 4000; // lama kartu tampil
-    const POPOUT_DURATION_MS = 500;   // harus sama dengan durasi animasi popOut di CSS
+    // lama kartu tampil ( dalam mili detik) sebelum animasi keluar
+    const DISPLAY_DURATION_MS = 4000;
 
-    const FALLBACK_AVATAR = "https://placehold.co/300x300?text=No+Image"; // avatar default kalau tidak ada URL
+    // avatar default kalau tidak ada URL
+    const FALLBACK_AVATAR = "https://placehold.co/300x300?text=No+Image";
 
     // ====== KONEKSI KE STREAMER.BOT ======
-    // Sekarang dengarkan "General.Custom", bukan "Twitch.RewardRedemption" langsung.
     // Payload custom ini dikirim dari Streamer.bot lewat CPH.WebsocketBroadcastJson,
-    // sudah digabung dengan global variable di sisi C# (lihat penjelasan terpisah).
+    // sudah digabung dengan global variable di sisi C#
     const client = new StreamerbotClient({
       port: STREAMERBOT_PORT,
       subscribe: {
@@ -89,5 +90,5 @@
       card.classList.add("animate-out");
 
       // 6. Tunggu animasi keluar selesai sebelum lanjut ke antrian berikutnya
-      await wait(POPOUT_DURATION_MS);
+      await wait(500);
     }

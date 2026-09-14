@@ -4,11 +4,12 @@ Overlay OBS yang menampilkan kartu "Attendance" setiap kali penonton melakukan c
 
 ## Struktur File
 
-| File                      | Fungsi                                                          |
-| ------------------------- | --------------------------------------------------------------- |
-| `index.html`              | Markup overlay + logika JS (koneksi WebSocket, antrian animasi) |
-| `style.css`               | Styling kartu overlay (bisa diganti sesuai selera)              |
-| Action C# di Streamer.bot | Mengambil data user saat redeem, lalu broadcast ke overlay      |
+| File                      | Fungsi                                                         |
+| ------------------------- | -------------------------------------------------------------- |
+| `index.html`              | Markup overlay saja (memuat `style.css` dan `script.js`)       |
+| `script.js`               | Logika JS: koneksi WebSocket ke Streamer.bot, antrian, animasi |
+| `style.css`               | Styling kartu overlay (bisa diganti sesuai selera)             |
+| Action C# di Streamer.bot | Mengambil data user saat redeem, lalu broadcast ke overlay     |
 
 ## Alur Kerja
 
@@ -84,7 +85,7 @@ public class CPHInline
 }
 ```
 
-atau bisa ambil dari file yang sudah ada di [sini](/main.cs)
+Atau bisa copas dari file yang sudah ada di [sini](/main.cs)
 
 **Catatan penamaan variabel Streamer.bot** (sering ketuker):
 
@@ -99,7 +100,7 @@ atau bisa ambil dari file yang sudah ada di [sini](/main.cs)
 3. Set ukuran sesuai kebutuhan (mis. 700×400) dan centang **Shutdown source when not visible: OFF** supaya koneksi WebSocket tidak putus-nyambung.
 4. Background sudah transparan by default (`background: transparent` di CSS).
 
-## Konfigurasi di `index.html`
+## Konfigurasi di [`script.js`](/script.js)
 
 Edit bagian `KONFIGURASI` di script sesuai kebutuhan:
 
@@ -107,7 +108,6 @@ Edit bagian `KONFIGURASI` di script sesuai kebutuhan:
 const STREAMERBOT_HOST = "127.0.0.1";
 const STREAMERBOT_PORT = 8081; // samakan dengan port WebSocket Server di Streamer.bot
 const DISPLAY_DURATION_MS = 4000; // lama kartu tampil di layar
-const POPOUT_DURATION_MS = 500; // harus sama dengan durasi animasi popOut di CSS
 const FALLBACK_AVATAR = "..."; // link gambar (300x300 pixel) dipakai kalau foto profil gagal dimuat
 ```
 
@@ -115,7 +115,7 @@ const FALLBACK_AVATAR = "..."; // link gambar (300x300 pixel) dipakai kalau foto
 
 | Gejala                                       | Kemungkinan Penyebab                                                                                                     |
 | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| Kartu langsung terlihat sebelum ada check-in | `opacity` dasar di CSS tidak 0 — pastikan `.card-container` mulai dari `opacity: 0`                                      |
+| Kartu langsung terlihat sebelum ada check-in | `opacity` dasar di CSS tidak 0 — pastikan `.card` mulai dari `opacity: 0`                                                |
 | Foto profil selalu fallback                  | Sub-action "Get User Info for Target" belum ada / salah urutan / Source Type salah                                       |
 | Nama tampil huruf kecil semua                | Salah pakai arg `userName` untuk display name — gunakan `user` untuk display name, `userName` untuk login                |
 | Hitungan absen reset sendiri                 | Opsi **Persist per User Counter** belum dicentang di reward                                                              |
