@@ -108,7 +108,7 @@ const STREAMERBOT_HOST = "127.0.0.1";
 const STREAMERBOT_PORT = 8081; // samakan dengan port WebSocket Server di Streamer.bot
 const DISPLAY_DURATION_MS = 4000; // lama kartu tampil di layar
 const POPOUT_DURATION_MS = 500; // harus sama dengan durasi animasi popOut di CSS
-const FALLBACK_AVATAR = "..."; // dipakai kalau foto profil gagal dimuat
+const FALLBACK_AVATAR = "..."; // link gambar (300x300 pixel) dipakai kalau foto profil gagal dimuat
 ```
 
 ## Troubleshooting
