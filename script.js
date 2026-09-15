@@ -97,7 +97,7 @@ async function showRedemption(name, jumlahAbsen, profileURL) {
 
   // 3. Animasi masuk + suara notifikasi
   card.classList.remove("animate-in", "animate-out");
-  void card.offsetWidth; // force reflow biar animasi bisa berulang
+  void card.offsetWidth;
   card.classList.add("animate-in");
   playNotifSound();
 
