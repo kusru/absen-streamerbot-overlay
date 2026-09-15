@@ -19,12 +19,12 @@ Overlay OBS yang menampilkan kartu "Attendance" setiap kali penonton melakukan c
 
 ## Struktur File
 
-| File                                  | Fungsi                                                         |
-| ------------------------------------- | -------------------------------------------------------------- |
-| `index.html`                          | Markup overlay saja (memuat `style.css` dan `script.js`)       |
-| `script.js`                           | Logika JS: koneksi WebSocket ke Streamer.bot, antrian, animasi |
-| `style.css`                           | Styling kartu overlay (bisa diganti sesuai selera)             |
-| `main.cs` / Action C# di Streamer.bot | Mengambil data user saat redeem, lalu broadcast ke overlay     |
+| File                                  | Fungsi                                                              |
+| ------------------------------------- | ------------------------------------------------------------------- |
+| `index.html`                          | Markup overlay saja (memuat `style.css` dan `script.js`)            |
+| `script.js`                           | Logika JS: koneksi WebSocket ke Streamer.bot, antrian, animasi      |
+| `style.css`                           | Styling kartu overlay (bisa diganti sesuai selera)                  |
+| `main.cs` / Action C# di Streamer.bot | Mengambil data user saat redeem check-in, lalu broadcast ke overlay |
 
 ## Alur Kerja
 
@@ -110,6 +110,53 @@ atau bisa ambil dari file yang sudah ada di [sini](./main.cs)
 - `userName` → login (huruf kecil), contoh `twitchuser123`
 - `targetUserProfileImageUrl` → hanya terisi kalau sub-action "Get User Info for Target" sudah jalan duluan
 
+### 4. Watch Streak (opsional, kalau mau foto profil ikut tampil)
+
+Secara default, event `Twitch.WatchStreak` bawaan Streamer.bot **tidak menyertakan foto profil** — objek `user` di payload-nya cuma berisi `id`, `login`, `name`, `role`, `badges`, dll, tanpa `profileImageUrl`. Kalau dibiarkan apa adanya, kartu Watch Streak akan selalu pakai avatar fallback.
+
+Supaya foto profil asli ikut tampil (sama seperti check-in), buat Action terpisah:
+
+- Buat Action baru, hubungkan ke trigger **Watch Streak** (Twitch → Chat → Watch Streak).
+- Susunan sub-action, urutan **wajib** dari atas ke bawah:
+  - **Get User Info for Target** (Twitch → User), Source Type = `%userName%` (kalau tidak tersedia, coba `%user%`)
+
+```csharp
+using System;
+using Newtonsoft.Json;
+
+public class CPHInline
+{
+    public bool Execute()
+    {
+        if (!CPH.TryGetArg("user", out string userDisplayName) || string.IsNullOrWhiteSpace(userDisplayName))
+        {
+            CPH.LogWarn("Arg 'user' tidak ditemukan, action dibatalkan.");
+            return false;
+        }
+
+        CPH.TryGetArg("userName", out string userLogin);
+        CPH.TryGetArg("targetUserProfileImageUrl", out string userProfile);
+        CPH.TryGetArg("streakCount", out int streakCount);
+
+        var payload = new
+        {
+            type = "watchstreak",
+            userName = userDisplayName,
+            userLogin = userLogin,
+            streakCount = streakCount,
+            profileURL = userProfile
+        };
+
+        CPH.WebsocketBroadcastJson(JsonConvert.SerializeObject(payload));
+        return true;
+    }
+}
+```
+
+> ⚠️ Karena ini pakai broadcast custom (sama seperti check-in), `script.js` versi terbaru sudah **tidak lagi subscribe langsung ke `Twitch.WatchStreak`** — semua diterima lewat `General.Custom`. Kalau kamu masih pakai `script.js` versi lama, foto profil watch streak tidak akan muncul walau Action ini sudah dibuat.
+>
+> 💡 Nama variabel `%user%`/`%userName%`/`%streakCount%` untuk trigger Watch Streak disediakan otomatis oleh Streamer.bot. Kalau saat testing ternyata `userLogin` kosong, cek nama variabel yang benar-benar terisi lewat tombol **Test** di Action tersebut, lalu sesuaikan Source Type di sub-action "Get User Info for Target".
+
 ## Setup di OBS
 
 1. Tambahkan **Browser Source** baru.
@@ -151,7 +198,7 @@ Setiap kartu muncul, `script.js` otomatis memutar file audio yang diset di `NOTI
 | Overlay tidak terhubung ke Streamer.bot      | Cek `STREAMERBOT_HOST`/`STREAMERBOT_PORT` di `script.js` cocok dengan setting WebSocket Server, dan server dalam status aktif |
 | Suara notifikasi tidak terdengar di stream   | **Control audio via OBS** belum dicentang di Properties Browser Source, atau `NOTIF_SOUND_SRC` salah nama file/path           |
 
-## Kalau ga mau ribet
+<!-- ## Kalau ga mau ribet
 
 ### 1. Setup di streamer.bot
 
@@ -167,7 +214,7 @@ Setiap kartu muncul, `script.js` otomatis memutar file audio yang diset di `NOTI
   - Klik Platform pada sidebar -> **Channel point rewards**, lalu _double click_ pada reward yang diinginkan
   - Aktifkan opsi **Presist User Count** -> klik **Save**
 
-- Ganti redeem-nya jadi yang diinginkan
+- Ganti redeem-nya jadi yang diinginkan -->
 
 ## Dukung Project Ini
 
