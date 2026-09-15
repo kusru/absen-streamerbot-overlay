@@ -151,6 +151,24 @@ Setiap kartu muncul, `script.js` otomatis memutar file audio yang diset di `NOTI
 | Overlay tidak terhubung ke Streamer.bot      | Cek `STREAMERBOT_HOST`/`STREAMERBOT_PORT` di `script.js` cocok dengan setting WebSocket Server, dan server dalam status aktif |
 | Suara notifikasi tidak terdengar di stream   | **Control audio via OBS** belum dicentang di Properties Browser Source, atau `NOTIF_SOUND_SRC` salah nama file/path           |
 
+## Kalau ga mau ribet
+
+### 1. Setup di streamer.bot
+
+- Download zip dari repo ini -> ekstrak
+
+### 2. Copas yang ada di file [`import.txt`](/import.txt) ke streamer.bot
+
+- Di streamer.bot -> klik **Import** -> lalu paste -> klik **Import**
+
+### 3. Membuat redeem
+
+- Buat rewards-nya di streamer.bot
+  - Klik Platform pada sidebar -> **Channel point rewards**, lalu _double click_ pada reward yang diinginkan
+  - Aktifkan opsi **Presist User Count** -> klik **Save**
+
+- Ganti redeem-nya jadi yang diinginkan
+
 ## Dukung Project Ini
 
 Project ini dibuat dan dirawat secara gratis. Kalau overlay-nya membantu stream kamu dan ingin traktir kopi:

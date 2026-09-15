@@ -29,16 +29,27 @@
 }
 
 .image-container {
+  position: relative;
+  width: 9rem;
+  height: 9rem;
   margin-right: 1.25rem;
 }
 
+.image-container::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  background-color: rgb(0, 0, 0);
+  clip-path: url(#wavyClip);
+}
+
 .image {
-  height: 9rem;
-  width: 9rem;
-  border-style: double;
-  border-width: 7px;
-  border-radius: 0.125rem;
-  border-color: rgb(0, 0, 0);
+  position: absolute;
+  inset: 0;
+  height: 100%;
+  width: 100%;
+  border: none;
+  clip-path: url(#wavyClip);
   object-fit: cover;
 }
 
