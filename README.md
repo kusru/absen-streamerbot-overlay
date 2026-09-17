@@ -19,14 +19,15 @@ Overlay OBS yang menampilkan kartu "Attendance" setiap kali penonton melakukan c
 
 ## Struktur File
 
-| File                                  | Fungsi                                                              |
-| ------------------------------------- | ------------------------------------------------------------------- |
-| `index.html`                          | Markup overlay saja (memuat `style.css` dan `script.js`)            |
-| `script.js`                           | Logika JS: koneksi WebSocket ke Streamer.bot, antrian, animasi      |
-| `style.css`                           | Styling kartu overlay (bisa diganti sesuai selera)                  |
-| `main.cs` / Action C# di Streamer.bot | Mengambil data user saat redeem check-in, lalu broadcast ke overlay |
+| File                                         | Fungsi                                                                    |
+| -------------------------------------------- | ------------------------------------------------------------------------- |
+| `index.html`                                 | Markup overlay saja (memuat `style.css` dan `script.js`)                  |
+| `script.js`                                  | Logika JS: koneksi WebSocket ke Streamer.bot, antrian, animasi            |
+| `style.css`                                  | Styling kartu overlay (bisa diganti sesuai selera)                        |
+| `main.cs` / Action C# di Streamer.bot        | Mengambil data user saat redeem check-in, lalu broadcast ke overlay       |
+| `watchstreak.cs` / Action C# di streamer.bot | Mengambil data user saat mengirim watch streak, lalu broadcast ke overlay |
 
-## Alur Kerja
+## Alur Kerja Absen
 
 1. Penonton me-redeem Channel Point Reward "Check-in" di Twitch.
 2. Streamer.bot menjalankan **Action** yang berisi:
@@ -36,7 +37,7 @@ Overlay OBS yang menampilkan kartu "Attendance" setiap kali penonton melakukan c
 
 ## Setup di Streamer.bot
 
-> ⚠️ Pastikan untuk backup data streamer.bot karena data jumlah absen yang diambil murni dari streamer.bot
+> ⚠️ Pastikan untuk backup data streamer.bot karena data jumlah absen yang diambil dari streamer.bot
 
 ### 1. WebSocket Server
 
@@ -153,8 +154,6 @@ public class CPHInline
 }
 ```
 
-> ⚠️ Karena ini pakai broadcast custom (sama seperti check-in), `script.js` versi terbaru sudah **tidak lagi subscribe langsung ke `Twitch.WatchStreak`** — semua diterima lewat `General.Custom`. Kalau kamu masih pakai `script.js` versi lama, foto profil watch streak tidak akan muncul walau Action ini sudah dibuat.
->
 > 💡 Nama variabel `%user%`/`%userName%`/`%streakCount%` untuk trigger Watch Streak disediakan otomatis oleh Streamer.bot. Kalau saat testing ternyata `userLogin` kosong, cek nama variabel yang benar-benar terisi lewat tombol **Test** di Action tersebut, lalu sesuaikan Source Type di sub-action "Get User Info for Target".
 
 ## Setup di OBS
@@ -197,24 +196,6 @@ Setiap kartu muncul, `script.js` otomatis memutar file audio yang diset di `NOTI
 | Hitungan absen tercampur antar reward        | `userCounter` bersifat per-reward; kalau check-in dipicu dari beberapa reward berbeda, hitungannya tidak akan tergabung       |
 | Overlay tidak terhubung ke Streamer.bot      | Cek `STREAMERBOT_HOST`/`STREAMERBOT_PORT` di `script.js` cocok dengan setting WebSocket Server, dan server dalam status aktif |
 | Suara notifikasi tidak terdengar di stream   | **Control audio via OBS** belum dicentang di Properties Browser Source, atau `NOTIF_SOUND_SRC` salah nama file/path           |
-
-<!-- ## Kalau ga mau ribet
-
-### 1. Setup di streamer.bot
-
-- Download zip dari repo ini -> ekstrak
-
-### 2. Copas yang ada di file [`import.txt`](/import.txt) ke streamer.bot
-
-- Di streamer.bot -> klik **Import** -> lalu paste -> klik **Import**
-
-### 3. Membuat redeem
-
-- Buat rewards-nya di streamer.bot
-  - Klik Platform pada sidebar -> **Channel point rewards**, lalu _double click_ pada reward yang diinginkan
-  - Aktifkan opsi **Presist User Count** -> klik **Save**
-
-- Ganti redeem-nya jadi yang diinginkan -->
 
 ## Dukung Project Ini
 
