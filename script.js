@@ -28,12 +28,15 @@ function playNotifSound() {
 }
 
 // ====== KONEKSI KE STREAMER.BOT ======
+// Catatan: subscribe Twitch.WatchStreak sudah tidak dipakai lagi.
+// Event native itu tidak menyertakan foto profil, jadi watch streak sekarang
+// dikirim lewat broadcast General.Custom dari Action C# di Streamer.bot
+// (sama seperti alur check-in), supaya foto profilnya ikut terbawa.
 const client = new StreamerbotClient({
   host: STREAMERBOT_HOST,
   port: STREAMERBOT_PORT,
   subscribe: {
-    General: ['Custom'],
-    Twitch: ['WatchStreak']
+    General: ['Custom']
   },
   onConnect: (info) => {
     console.log("Berhasil terhubung ke Streamer.bot!", info);
@@ -54,41 +57,38 @@ function wait(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-// Handler Event Custom dari C# (Attendance Check / Absen)
+// Handler Event Custom dari C# (Attendance Check / Absen & Watch Streak)
 client.on('General.Custom', ({ data }) => {
-  if (data?.type !== 'checkin') return; // abaikan broadcast lain yang bukan event check-in
+  console.log("Payload data broadcast:", data);
 
-  console.log("Payload data redeem:", data);
+  if (data?.type === 'checkin') {
+    const name = data.userName || "Username";
+    const jumlahAbsen = data.jumlahAbsen;
+    const profileURL = data.profileURL;
 
-  const name = data.userName || "Username";
-  const jumlahAbsen = data.jumlahAbsen;
-  const profileURL = data.profileURL;
+    redeemQueue.push({
+      type: 'checkin',
+      title: CHECKIN_LABEL,
+      name,
+      jumlahAbsen,
+      profileURL
+    });
+    processQueue();
+  } else if (data?.type === 'watchstreak') {
+    const name = data.userName || "Viewer";
+    const streakCount = data.streakCount;
+    const profileURL = data.profileURL;
 
-  redeemQueue.push({ 
-    type: 'checkin', 
-    title: 'Attendance',
-    name, 
-    jumlahAbsen, 
-    profileURL 
-  });
-  processQueue();
-});
-
-// Handler Event Watch Streak dari Twitch
-client.on('Twitch.WatchStreak', ({ data }) => {
-  console.log("Payload watch streak:", data);
-
-  const name = data.user?.name || data.user?.login || "Viewer";
-  const streakCount = data.streakCount;
-
-  redeemQueue.push({ 
-    type: 'watchstreak', 
-    title: 'Watch Streak',
-    name, 
-    streakCount, 
-    profileURL: data.user?.profileImageUrl || null 
-  });
-  processQueue();
+    redeemQueue.push({
+      type: 'watchstreak',
+      title: WATCHSTREAK_LABEL,
+      name,
+      streakCount,
+      profileURL
+    });
+    processQueue();
+  }
+  // abaikan broadcast lain yang bukan checkin/watchstreak
 });
 
 async function processQueue() {
