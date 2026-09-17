@@ -28,7 +28,6 @@ function playNotifSound() {
 }
 
 // ====== KONEKSI KE STREAMER.BOT ======
-// Catatan: subscribe Twitch.WatchStreak sudah tidak dipakai lagi.
 // Event native itu tidak menyertakan foto profil, jadi watch streak sekarang
 // dikirim lewat broadcast General.Custom dari Action C# di Streamer.bot
 // (sama seperti alur check-in), supaya foto profilnya ikut terbawa.
