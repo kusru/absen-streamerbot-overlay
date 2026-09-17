@@ -18,7 +18,7 @@
   width: 90vw;
   height: 80vh;
   box-sizing: border-box;
-  border-radius: 3.7vmin;
+  border-radius: 8.4vmin;
   border-width: 0.8vmin;
   border-style: solid;
   border-color: rgb(0, 0, 0);
@@ -27,7 +27,7 @@
   box-shadow:
     0 0 #0000,
     0 0 #0000,
-    1.6vmin 1.6vmin 0 0 #000;
+    2.6vmin 2.6vmin 0 0 #000;
 }
 
 .image-container {
@@ -64,11 +64,11 @@
 
 .title {
   background-color: rgb(255, 255, 255);
-  border-radius: 2vmin;
+  border-radius: 3.7vmin;
   padding: 1.1vmin 5.2vmin;
   border: 0.5vmin solid rgb(0, 0, 0);
   font-size: 6vmin;
-  font-weight: 700;
+  font-weight: 300;
   text-transform: uppercase;
   letter-spacing: 0.2em;
   color: rgb(0, 0, 0);
@@ -81,13 +81,13 @@
 
 .username-text {
   font-size: 9vmin;
-  font-weight: 900;
+  font-weight: 600;
   color: rgb(0, 0, 0);
 }
 
 .summary-text {
   margin-top: 1.3vmin;
   font-size: 7vmin;
-  font-weight: 600;
+  font-weight: 550;
   color: rgb(0, 0, 0);
 }
